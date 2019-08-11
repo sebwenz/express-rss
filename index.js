@@ -4,12 +4,12 @@ let rss = require('rss-to-json');
 let qs = require('querystring');
 let MongoClient = require('mongodb').MongoClient;
 
-let url = "mongodb://localhost:27017/mydb";
-let dbo; 
+let url = "mongodb://localhost:27017/feedDB";
+let dbo;
 
 MongoClient.connect(url, function (err, db) {
     if (err) throw err;
-    dbo = db.db("mydb");
+    dbo = db.db("feedDB");
     dbo.createCollection("feeds", function (err, res) {
         if (err) throw err;
     });
@@ -28,51 +28,61 @@ app.get('/', (req, res) => {
 
 app.post('/addFeed', (req, res) => {
     const feedLink = req.body.rssfeedlink;
-    const feedTag = req.body.feedName; 
+    const feedTag = req.body.feedName;
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var feedObj = {
-                        url: feedLink,
-                        name: feedTag
-                    };
+            url: feedLink,
+            name: feedTag
+        };
         dbo.collection("feeds").insertOne(feedObj, function (err, res) {
             if (err) throw err;
             console.log("link inserted");
         });
     });
-        rss.load(feedLink, function (err, rss) {
-            res.render('index', { rss: rss.items });
-            //console.log(rss);
-            dbo.collection("feeds").find({}).toArray(function (err, result) {
-                if (err) throw err;
-                console.log(result);
-            });
+    rss.load(feedLink, function (err, rss) {
+        res.render('index', { rss: rss.items });
+        //console.log(rss);
+        dbo.collection("feeds").find({}).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
         });
     });
+});
 
 
 app.post('/feedOverview', (req, res) => {
-    MongoClient.connect(url, function (err, db){
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         dbo.collection("feeds").find({}).toArray(function (err, result) {
-            if(err) throw err;
+            if (err) throw err;
             console.log(result);
-            res.render('overview', {result: result});
+            res.render('overview', { result: result });
         })
     })
 })
 
 app.post('/showfeed', (req, res) => {
     const feedLink = req.body.linktofeed;
+    console.log(req.body.linktofeed);
+    console.log(req.body.name);
     rss.load(feedLink, function (err, rss) {
         res.render('index', { rss: rss.items });
         //console.log(rss);
     });
 });
 
-    app.listen(8080, () => {
-        console.log('app listening on port 8080');
-    });
+app.post('/removeDatabase', (req, res) => {
+   MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      dbo = db.db("mydb");
+      dbo.feeds.remove({});
+  });
+});
+
+app.listen(8080, () => {
+    console.log('app listening on port 8080');
+});
 
 
 
