@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title> expresss-rss-reader </title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+
+<body>
+    <%rss.forEach(item => {%>
+    <div class="jumbotron">
+        <h1 class='display-4'>
+            <%- item.title%>
+        </h1>
+        <hr class="my-4">
+        <% if (item.enclosures) { %>
+        <div class="article-picture">
+            <img src="<%- item.enclosures[0].url%>" alt="">
+        </div>
+        <%} %>
+        <p class='lead'>
+            <%- item.description%>
+        </p>
+
+    </div>
+    <%});%>
+</body>
+
+</html>
