@@ -2,6 +2,15 @@ let express = require('express');
 let app = express();
 let rss = require('rss-to-json');
 let qs = require('querystring');
+let MongoClient = require ('mongodb').MongoClient;
+
+var url = "mongodb://localhost:27017/mydb";
+
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    console.log("Database created!");
+    db.close();
+});
 
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
