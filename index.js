@@ -73,11 +73,11 @@ app.post('/showfeed', (req, res) => {
 });
 
 app.post('/removeDatabase', (req, res) => {
-   MongoClient.connect(url, function (err, db) {
-      if (err) throw err;
-      dbo = db.db("mydb");
-      dbo.feeds.remove({});
-  });
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        dbo = db.db("mydb");
+        dbo.feeds.remove({});
+    });
 });
 
 app.listen(8080, () => {
