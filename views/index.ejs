@@ -9,7 +9,7 @@
 
 <body>
     <form method="post" action="/addFeed">
-        <input type="text" name="rss-feed-link">
+        <input type="text" name="rssfeedlink">
         <input type="submit" value="Submit">
     </form>
     <%rss.forEach(item => {%>
@@ -26,6 +26,9 @@
         <p class='lead'>
             <%- item.description%>
         </p>
+        <a href="<%- item.link%>">
+            Read full article
+        </a>
 
     </div>
     <%});%>
