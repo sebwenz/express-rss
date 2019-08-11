@@ -8,14 +8,16 @@
 </head>
 
 <body>
-    <form method="post" action="/addFeed">
-        <input type="text" name="rssfeedlink" value="hier Link einfügen">
-        <input type="text" name="feedName" value="hier Name einfügen">
-        <input type="submit" value="Submit">
-    </form>
-    <form method="post" action="/feedOverview">
-        <input type="submit" value="Overview">
-    </form>
+    <div class ="header">
+        <form method="post" action="/addFeed">
+            <input type="text" name="rssfeedlink" value="hier Link einfügen" class="input-text">
+            <input type="text" name="feedName" value="hier Name einfügen" class="input-text">
+            <input type="submit" value="Submit">
+        </form>
+        <form method="post" action="/feedOverview">
+            <input type="submit" value="Overview">
+        </form>
+    </div>
     <%rss.forEach(item => {%>
     <div class="jumbotron">
         <h1 class='display-4'>
