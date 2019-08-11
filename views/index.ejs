@@ -8,6 +8,10 @@
 </head>
 
 <body>
+    <form method="post" action="/addFeed">
+        <input type="text" name="rss-feed-link">
+        <input type="submit" value="Submit" onclick="loadFeed()">
+    </form>
     <%rss.forEach(item => {%>
     <div class="jumbotron">
         <h1 class='display-4'>
