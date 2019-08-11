@@ -16,24 +16,19 @@
     <form method="post" action="/feedOverview">
         <input type="submit" value="Overview">
     </form>
-    <%rss.forEach(item => {%>
+    <%result.forEach(result => {%>
     <div class="jumbotron">
-        <h1 class='display-4'>
-            <%- item.title%>
-        </h1>
-        <hr class="my-4">
-        <% if (item.enclosures) { %>
-        <div class="article-picture">
-            <img src="<%- item.enclosures[0].url%>" alt="">
-        </div>
-        <%} %>
-        <p class='lead'>
-            <%- item.description%>
-        </p>
-        <a href="<%- item.link%>">
-            Read full article
-        </a>
-
+        <form method="post" action="/showfeed">
+            <input type="text" class='invisible-shit' name="linktofeed" value="<%- result.url%>"></input>
+            <h1 class="my-4">
+                <%- result.name%>
+            </h1>
+            <hr class="my-4">
+            <p class='lead'>
+                <%- result._id%>
+            </p>
+            <input type="submit" value="show feed">
+        </form>
     </div>
     <%});%>
 </body>
