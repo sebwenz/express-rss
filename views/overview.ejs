@@ -9,17 +9,30 @@
 
 <body>
     <div class="header">
-        <form method="post" action="/addFeed">
-            <input type="text" name="rssfeedlink" value="hier Link einfügen" class="input-text">
-            <input type="text" name="feedName" value="hier Name einfügen" class ="input-text">
-            <input type="submit" value="Submit">
+        <div class="float-btn">
+            <button class="btn btn-success" onclick="openForm()">+</button>
+        </div>
+        <div class="form-popup" id="myForm">
+            <form method="post" action="/addFeed" class="form-container">
+                <h1>Add RSS-Feed</h1>
+
+                <label for="email"><b>RSS-Feed URL</b></label>
+                <input type="text" placeholder="enter URL here" name="rssfeedlink" required>
+
+                <label for="feedName"><b>Feed-Name</b></label>
+                <input type="text" placeholder="Enter name" name="feedName" required>
+
+                <button type="submit" class="btn">Add</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+            </form>
+        </div>
+        <form method="post" action="/feedOverview">
+            <input type="submit" value="Overview" class="btn btn-secondary">
         </form>
         <form method="post" action="/removeDatabase">
-            <input type="submit" value="Delete Database">
+            <input type="submit" value="Delete Database" class="btn btn-secondary">
         </form>
-        <form method="post" action="/feedOverview">
-            <input type="submit" value="Overview">
-        </form>
+
     </div>
     <%result.forEach(result => {%>
     <div class="jumbotron">
@@ -32,7 +45,7 @@
             <p class='lead'>
                 <%- result._id%>
             </p>
-            <input type="submit" value="show feed">
+            <input type="submit" value="show feed" class="btn btn-secondary">
         </form>
     </div>
     <%});%>
