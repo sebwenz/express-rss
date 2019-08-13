@@ -14,6 +14,7 @@ MongoClient.connect(url, function (err, db) {
         if (err) throw err;
     });
 });
+
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(express.static("node_modules/bootstrap/dist"))
@@ -63,21 +64,36 @@ app.post('/feedOverview', (req, res) => {
 })
 
 app.post('/showfeed', (req, res) => {
-    const feedLink = req.body.linktofeed;
+    var feedLink = req.body.linktofeed;
     console.log(req.body.linktofeed);
-    console.log(req.body.name);
+    //console.log(req.body.name);
     rss.load(feedLink, function (err, rss) {
         res.render('index', { rss: rss.items });
         //console.log(rss);
     });
 });
 
+app.post('/deleteFeed', (req, res) => {
+    var feedLink2 = req.body.linktofeed;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        dbo = db.db("feedDB");
+        dbo.collection("feeds").deleteOne({url: feedLink2});
+        console.log(feedLink2);
+        dbo.collection("feeds").find({}).toArray(function (err, result) {
+            if (err) throw err;
+            //console.log(result);
+            res.render('overview', { result: result });
+        })
+    });
+});
+
 app.post('/removeDatabase', (req, res) => {
-   MongoClient.connect(url, function (err, db) {
-      if (err) throw err;
-      dbo = db.db("mydb");
-      dbo.feeds.remove({});
-  });
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        dbo = db.db("mydb");
+        dbo.feeds.remove({});
+    });
 });
 
 app.listen(8080, () => {

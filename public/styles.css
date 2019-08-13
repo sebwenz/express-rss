@@ -32,10 +32,12 @@ a {
     top: 0; 
     width: 100%;
     margin-bottom: 1%;
+    z-index: 8;
 }
 
 .invisible-shit {
     display: none; 
+    z-index: 1;
 }
 
 .header > form {
@@ -111,4 +113,29 @@ a {
       margin-top: 1%;
       margin-left: 1%; 
       float: left;
+      z-index: 1;
   }
+
+  .list-group {
+      width: 70%;
+      margin-top: 10%;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 1;
+  }
+
+.float-left {
+    float: left;
+    z-index: 1;
+}
+
+.float-right{
+    float: right;
+    margin-left: 1%;
+    z-index: 1;
+}
+
+.list-group-item{
+    height: 4rem;
+    z-index: 1;
+}

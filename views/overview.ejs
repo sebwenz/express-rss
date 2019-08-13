@@ -29,26 +29,41 @@
         <form method="post" action="/feedOverview">
             <input type="submit" value="Overview" class="btn btn-secondary">
         </form>
-        <form method="post" action="/removeDatabase">
-            <input type="submit" value="Delete Database" class="btn btn-secondary">
-        </form>
+    </div>
+    <div class="list-group">
+        <%result.forEach(result => {%>
 
+        
+            <li class="list-group-item" name="name"><form method="post" action="/showfeed">
+               <div>
+                   <input type="text" class='invisible-shit' name="linktofeed" value="<%- result.url%>"></input>
+                <div class="float-left" name="deleteName" value="<%- result.name%>">
+                    <%- result.name%>
+                </div>
+                
+                <div class="float-right">
+                    <input type="submit" value="show feed" class="btn btn-secondary">
+                </div>
+            </form>
+            <div class="float-right">
+                <form method="post" action="/deleteFeed">
+                    <input type="submit" value="Remove" class="btn btn-danger"> 
+                    <input type="text" class='invisible-shit' name="linktofeed" value="<%- result.url%>"></input>
+                </form>   
+            </div>
+        </div> 
+            </li>
+        <%});%>
     </div>
-    <%result.forEach(result => {%>
-    <div class="jumbotron">
-        <form method="post" action="/showfeed">
-            <input type="text" class='invisible-shit' name="linktofeed" value="<%- result.url%>"></input>
-            <h1 class="my-4" name="name">
-                <%- result.name%>
-            </h1>
-            <hr class="my-4">
-            <p class='lead'>
-                <%- result._id%>
-            </p>
-            <input type="submit" value="show feed" class="btn btn-secondary">
-        </form>
-    </div>
-    <%});%>
+
 </body>
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
 
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>
 </html>
